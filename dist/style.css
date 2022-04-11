@@ -1,0 +1,29 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: #fffffe;
+}
+
+body {
+    background-color: #0f0e17;
+    font-family: 'Noto Sans', sans-serif;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 20% 80%;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 5rem;
+    border-bottom: 4px solid black;
+    grid-column: 1 / 4;
+    height: 100%;
+}
+
+.projects {
+    border-right: 4px solid black;
+}
