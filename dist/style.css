@@ -48,6 +48,7 @@ body {
     height: 100%;
     min-height: 120px;
     padding: 0 2rem;
+    justify-content: center;
 }
 
 .sidebar {
@@ -97,23 +98,49 @@ body {
 }
 
 /* TASKS CARD -------------------------------- */
-.card-task > button {
+button {
     outline: none;
     border: none;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .card-task {
-    background-color: var(--highlight);
+    background-color: var(--main);
     display: flex;
     padding-left: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
 }
+
 .urgent {
     border-left: 0.5rem solid red;
 }
 
 .btn-done {
-    background-color: var(--secondary);
+    height: 100%;
+    background-color: var(--button);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-done:hover {
+    background-color: #faad38;
+}
+
+.btn-delete {
+    font-size: 1rem;
+    background-color: var(--main);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.btn-delete:hover {
+    transform: scale(110%);
+}
+
+.card-task > *, .mdi-close {
+    color: #000;
 }
 
 /* TASKS LIST ------------------------------------ */
