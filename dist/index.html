@@ -13,8 +13,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.6.96/css/materialdesignicons.min.css">
 </head>
 <body>
-    <div class="header"><span class="mdi mdi-checkbox-marked-circle-plus-outline"></span> Todo List</div>
-    <div class="projects">THIS IS THE PROJECT LIST</div>
-    <div class="tasks">THIS IS THE TAST LIST</div>
+    <div class="container">
+        <div class="header"><span class="mdi mdi-checkbox-marked-circle-plus-outline"></span> Todo List</div> 
+        
+        <div class="sidebar">
+            <div class="project-list">
+                <h1>Projects</h1>
+                <div class="card-project">
+                    <h2>Project 1</h2>
+                    <p class="task-num">5</p>
+                </div>
+                <div class="card-project">
+                    <h2>Project 1</h2>
+                    <p class="task-num">5</p>
+                </div>
+                <div class="card-project">
+                    <h2>Project 1</h2>
+                    <p class="task-num">5</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tasks">
+            <div class="tasks-list">
+                <div class="card-task urgent">
+                    <p class="task-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat dolor provident, beatae vero laudantium aut.</p>
+                    <button class="btn-done">Done</button>
+                    <button class="btn-delete">
+                        <span class="mdi mdi-close"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="finished-tasks">
+                FINISHED TASK
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
