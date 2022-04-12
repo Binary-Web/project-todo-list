@@ -1,3 +1,18 @@
+:root {
+    --bgColor: #004643;
+    --paragraph: #abd1c6;
+    --btnText: #001e1d;
+    --headline: #fffffe;
+    --button: #f9bc60;
+
+    /* this is for the border color */
+    --stroke: #001e1d;
+    --highlight: #f9bc60;
+    --tertiary: #e16162;
+    --main: #e8e4e6;
+    --secondary: #abd1c6;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -6,24 +21,101 @@
 }
 
 body {
-    background-color: #0f0e17;
+    background-color: var(--button);
+}
+
+.container {
+    max-width: 1300px;
+    margin: 1rem auto;
+    background-color: var(--bgColor);
     font-family: 'Noto Sans', sans-serif;
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 30% 70%;
     grid-template-rows: 20% 80%;
+    border-radius: 25px;
     height: 100vh;
+    box-shadow: 1px 5px 10px #000;
 }
+
 
 .header {
     display: flex;
     align-items: center;
     font-family: 'Bebas Neue', cursive;
     font-size: 5rem;
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid var(--stroke);
     grid-column: 1 / 4;
     height: 100%;
+    min-height: 120px;
+    padding: 0 2rem;
 }
 
-.projects {
-    border-right: 4px solid black;
+.sidebar {
+    border-right: 4px solid var(--stroke);
+    padding:  2rem 1rem;
 }
+
+/* PROJECT LIST ------------------------------- */
+
+/* CARD PROJECT */
+.card-project {
+    background-color: var(--secondary);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5px;
+    margin: 1rem 0;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.card-project:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 5px #000;
+}
+.card-project> * {
+    color: var(--stroke);
+}
+.task-num {
+    background-color: var(--tertiary);
+    color: var(--btnText);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 100%;
+}
+
+
+/* TASKS CONTAINER */
+.tasks {
+    display: grid;
+    grid-template-rows: 70% 30%;
+    padding:  2rem 1rem;
+}
+
+/* TASKS CARD -------------------------------- */
+.card-task > button {
+    outline: none;
+    border: none;
+    padding: 1rem;
+}
+
+.card-task {
+    background-color: var(--highlight);
+    display: flex;
+    padding-left: 1rem;
+}
+.urgent {
+    border-left: 0.5rem solid red;
+}
+
+.btn-done {
+    background-color: var(--secondary);
+}
+
+/* TASKS LIST ------------------------------------ */
+
+
