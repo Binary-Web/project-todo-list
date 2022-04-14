@@ -20,24 +20,12 @@
         </div> 
         
         <div class="sidebar active">
+            <h1>Projects</h1>
             <div class="project-list">
-                <h1>Projects</h1>
-                <div class="card-project">
-                    <h2>Project 1</h2>
-                    <p class="task-num">5</p>
-                </div>
-                <div class="card-project">
-                    <h2>Project 1</h2>
-                    <p class="task-num">5</p>
-                </div>
-                <div class="card-project">
-                    <h2>Project 1</h2>
-                    <p class="task-num">5</p>
-                </div>
-                <div class="btn-add-project">
-                    <h3>Add Project</h3>
-                    <span class="mdi mdi-plus"></span>
-                </div>
+            </div>
+            <div class="btn-add-project">
+                <h3>Add Project</h3>
+                <span class="mdi mdi-plus"></span>
             </div>
         </div>
 
@@ -72,11 +60,11 @@
     <div class="modal-container">
         <div class="modal modal-add-project">
             <h2>Add Project</h2>
-            <form>
+            <form class="project-form">
                 <input type="text" name="projectTitle" id="projectTitle" placeholder="Enter Project Name">
             </form>
             <div class="modal-btn-group">
-                <button class="btn-add">Add</button>
+                <button class="modal-btn-add-project">Add</button>
                 <button class="btn-cancel">Cancel</button>
             </div>
         </div>
@@ -85,13 +73,13 @@
             <h2>Add Task</h2>
             <form>
                 <div class="form-group">
-                    <label for="taskName">Name</label>
-                    <input type="text" id="taskName">
+                    <label for="taskName">Task Name</label>
+                    <input type="text" id="taskName" required>
                 </div>
 
                 <div class="form-group">
                     <label for="priority">Priority</label>
-                    <select name="priority" id="priority">
+                    <select name="priority" id="priority" required>
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
@@ -99,7 +87,7 @@
                 </div>
             </form>
             <div class="modal-btn-group">
-                <button class="btn-add">Add</button>
+                <button class="modal-btn-add-task">Add</button>
                 <button class="btn-cancel">Cancel</button>
             </div>
         </div>
