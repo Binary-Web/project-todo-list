@@ -113,6 +113,10 @@ body {
     grid-template-rows: 70% 30%;
     padding:  2rem 1rem;
 }
+.task-category {
+    padding: 1rem 0;
+    border-top: 2px solid var(--stroke)
+}
 
 .taskslist-container, .finished-tasklist-container {
     display: flex;
@@ -133,7 +137,8 @@ button {
     padding-left: 1rem;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .low {

@@ -95,12 +95,6 @@ function loadTasksArea() {
 }
 loadTasksArea();
 
-function loadTasksContainers() {
-    mainDiv.innerHTML = "";
-    //AVAIBLE TASKS -----------------------------------------
-
-
-}
 
 btnModalAddProject.addEventListener('click', () => {
     modalContainer.style.display = "flex";
@@ -161,6 +155,8 @@ function loadTask(key) {
     const tasksList = document.createElement('div');
     tasksList.classList.add('tasks-list');
 
+
+    //AVAIABLE TASKS
     const containerTitle = document.createElement('h3');
     containerTitle.innerText = "Avaible Tasks";
 
@@ -175,9 +171,7 @@ function loadTask(key) {
         modalAddTask.style.display = "grid";
     });
 
-
-
-    tasksList.appendChild(containerTitle);
+    tasksList.append(containerTitle);
     tasksList.appendChild(divTaskListContainer);
     tasksList.appendChild(divBtnAddTask);
 
@@ -189,16 +183,17 @@ function loadTask(key) {
     const divFinishedTasks = document.createElement('div');
     divFinishedTasks.classList.add('finished-tasks');
 
-    containerTitle.innerText = "Finished Tasks";
+    const finishedContainerTitle = document.createElement('h3');
+    finishedContainerTitle.classList.add('task-category')
+    finishedContainerTitle.innerText = "Finished Tasks";
 
     const divFinishedTasksListContainer = document.createElement('div');
-    divFinishedTasksListContainer.classList.add('finished-taskslist-container');
+    divFinishedTasksListContainer.classList.add('finished-tasklist-container');
 
-    divFinishedTasks.appendChild(containerTitle);
+    divFinishedTasks.appendChild(finishedContainerTitle);
     divFinishedTasks.appendChild(divFinishedTasksListContainer);
 
-
-   
+    //APPENDING THE TASKS
     divTaskListContainer.innerHTML = "";
     divFinishedTasksListContainer.innerHTML = ""
     const projectTitle = projectList[key].title;
@@ -212,6 +207,8 @@ function loadTask(key) {
         const task = createFinishedTaskCards(fTask.name, fTask.priority);
         divFinishedTasksListContainer.appendChild(task);
     })
+
+    mainDiv.appendChild(divFinishedTasks)
 
 }
 
