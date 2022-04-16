@@ -42,7 +42,7 @@ let projectList = [
             },
             {
                 name: "WORLD FINISHED TASK 4",
-                priority: "HIGH"
+                priority: "high"
             } 
         ]
     },
@@ -72,9 +72,7 @@ let projectList = [
 ];
 
 
-//these are buttons to show the modal forms
 const btnModalAddProject = document.querySelector('.btn-add-project');
-const btnModalAddTask = document.querySelector('.btn-add-task');
 
 const addProjectModalForm = document.querySelector('.project-form')
 const modalContainer = document.querySelector('.modal-container');
@@ -85,10 +83,63 @@ const btnCancel = document.querySelectorAll('.btn-cancel');
 const btnAddProject = document.querySelector('.modal-btn-add-project');
 
 
-btnModalAddTask.addEventListener('click', () => {
-    modalContainer.style.display = "flex";
-    modalAddTask.style.display = "grid";
-});
+
+const mainDiv = document.querySelector('.tasks')
+function loadTasksArea() {
+
+
+    const h1Message = document.createElement('h1');
+    h1Message.classList.add('task-message');
+    
+    mainDiv.append(h1Message);
+}
+loadTasksArea();
+
+function loadTasksContainers() {
+    mainDiv.innerHTML = "";
+    console.log("loadTasksContainer")
+    //AVAIBLE TASKS -----------------------------------------
+    const tasksList = document.createElement('div');
+    tasksList.classList.add('tasks-list');
+
+    const containerTitle = document.createElement('h3');
+    containerTitle.innerText = "Avaible Tasks";
+
+    const divTaskListContainer = document.createElement('div');
+    divTaskListContainer.classList.add('tasks-container');
+
+    const divBtnAddTask = document.createElement('div');
+    divBtnAddTask.classList.add('btn-add-task')
+    divBtnAddTask.innerText = "Add Tasks";
+    divBtnAddTask.addEventListener('click', () => {
+        modalContainer.style.display = "flex";
+        modalAddTask.style.display = "grid";
+    });
+
+
+
+    tasksList.appendChild(containerTitle);
+    tasksList.appendChild(divTaskListContainer);
+    tasksList.appendChild(divBtnAddTask);
+
+
+
+    mainDiv.appendChild(tasksList);
+
+    //FINISHED TASKS;
+    const divFinishedTasks = document.createElement('div');
+    divFinishedTasks.classList.add('finished-tasks');
+
+    containerTitle.innerText = "Finished Tasks";
+
+    const divFinishedTasksListContainer = document.createElement('div');
+    divFinishedTasksListContainer.classList.add('finished-tasklist-container');
+
+    divFinishedTasks.appendChild(containerTitle);
+    divFinishedTasks.appendChild(divFinishedTasksListContainer);
+
+    return (mainDiv, divFinishedTasks)
+}
 
 btnModalAddProject.addEventListener('click', () => {
     modalContainer.style.display = "flex";
@@ -108,9 +159,9 @@ function closeModal() {
     modalAddProject.style.display = "none";;
 }
 
-
 // WHEN SELECTINGA PROJECT CARD
 function projectCardSelect(event) {
+
     const projectCards = document.querySelectorAll('.card-project');
     projectCards.forEach(card => card.classList.remove('project-active'))
     const activeProject = event.target;
@@ -140,18 +191,56 @@ function loadProject() {
 
 loadProject()
 
+
+let firstSelectedProject = true;
 function loadTask(key) {
+    if (firstSelectedProject === true) {
+        console.log("TRUE")
+        const test = loadTasksContainers();
+        console.log(test)
+    }
     const taskListContainer = document.querySelector('.taskslist-container');
-    taskListContainer.innerHTML = ""
+    const finishedTaskListContainer = document.querySelector('.finished-tasklist-container');
+    taskListContainer.innerHTML = "";
+    finishedTaskListContainer.innerHTML = ""
     const projectTitle = projectList[key].title;
     const availableTasks = projectList[key].availableTasks;
     const finishedTasks = projectList[key].finishedTasks;
     availableTasks.forEach(aTask => {
         const task = createAvailableTaskCards(aTask.name, aTask.priority);
-        console.log(task)
         taskListContainer.append(task);
+    });
+    finishedTasks.forEach(fTask => {
+        const task = createFinishedTaskCards(fTask.name, fTask.priority);
+        finishedTaskListContainer.append(task);
     })
 
+}
+
+function createFinishedTaskCards(name, priority) {
+    const taskCard = document.createElement('div');
+
+    const btnDelete = document.createElement('button');
+    btnDelete.classList.add('btn-delete');
+
+    //FOR X ICON FOR DELETING TASKS
+    const btnDeleteText = document.createElement('span');
+    btnDeleteText.classList.add('mdi');
+    btnDeleteText.classList.add('mdi-close');
+    btnDelete.append(btnDeleteText);
+
+    const btnGroup = document.createElement('div');
+    btnGroup.classList.add('btn-group');
+    btnGroup.appendChild(btnDelete);
+
+    taskCard.classList.add('card-task');
+    taskCard.classList.add(priority);
+    const taskName = document.createElement('p');
+    taskName.innerText = name;
+    taskCard.appendChild(taskName);
+    taskCard.appendChild(btnGroup)
+
+    return taskCard;
 }
 
 function createAvailableTaskCards(name, priority) {
@@ -162,6 +251,7 @@ function createAvailableTaskCards(name, priority) {
     const btnDelete = document.createElement('button');
     btnDelete.classList.add('btn-delete');
 
+    //FOR X ICON FOR DELETING TASKS
     const btnDeleteText = document.createElement('span');
     btnDeleteText.classList.add('mdi');
     btnDeleteText.classList.add('mdi-close');
@@ -182,16 +272,6 @@ function createAvailableTaskCards(name, priority) {
 
     return taskCard;
 }
-
-{/* <div class="card-task urgent">
-                        <p class="task-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, dolore!</p>
-                        <div class="btn-group">
-                            <button class="btn-done">Done</button>
-                            <button class="btn-delete">
-                                <span class="mdi mdi-close"></span>
-                            </button>
-                        </div>
-                    </div> */}
 
 
 // TODO LIST FUNCTIONS
