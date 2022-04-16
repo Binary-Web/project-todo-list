@@ -97,48 +97,9 @@ loadTasksArea();
 
 function loadTasksContainers() {
     mainDiv.innerHTML = "";
-    console.log("loadTasksContainer")
     //AVAIBLE TASKS -----------------------------------------
-    const tasksList = document.createElement('div');
-    tasksList.classList.add('tasks-list');
-
-    const containerTitle = document.createElement('h3');
-    containerTitle.innerText = "Avaible Tasks";
-
-    const divTaskListContainer = document.createElement('div');
-    divTaskListContainer.classList.add('tasks-container');
-
-    const divBtnAddTask = document.createElement('div');
-    divBtnAddTask.classList.add('btn-add-task')
-    divBtnAddTask.innerText = "Add Tasks";
-    divBtnAddTask.addEventListener('click', () => {
-        modalContainer.style.display = "flex";
-        modalAddTask.style.display = "grid";
-    });
 
 
-
-    tasksList.appendChild(containerTitle);
-    tasksList.appendChild(divTaskListContainer);
-    tasksList.appendChild(divBtnAddTask);
-
-
-
-    mainDiv.appendChild(tasksList);
-
-    //FINISHED TASKS;
-    const divFinishedTasks = document.createElement('div');
-    divFinishedTasks.classList.add('finished-tasks');
-
-    containerTitle.innerText = "Finished Tasks";
-
-    const divFinishedTasksListContainer = document.createElement('div');
-    divFinishedTasksListContainer.classList.add('finished-tasklist-container');
-
-    divFinishedTasks.appendChild(containerTitle);
-    divFinishedTasks.appendChild(divFinishedTasksListContainer);
-
-    return (mainDiv, divFinishedTasks)
 }
 
 btnModalAddProject.addEventListener('click', () => {
@@ -195,24 +156,61 @@ loadProject()
 let firstSelectedProject = true;
 function loadTask(key) {
     if (firstSelectedProject === true) {
-        console.log("TRUE")
-        const test = loadTasksContainers();
-        console.log(test)
+        mainDiv.innerHTML = ""
     }
-    const taskListContainer = document.querySelector('.taskslist-container');
-    const finishedTaskListContainer = document.querySelector('.finished-tasklist-container');
-    taskListContainer.innerHTML = "";
-    finishedTaskListContainer.innerHTML = ""
+    const tasksList = document.createElement('div');
+    tasksList.classList.add('tasks-list');
+
+    const containerTitle = document.createElement('h3');
+    containerTitle.innerText = "Avaible Tasks";
+
+    const divTaskListContainer = document.createElement('div');
+    divTaskListContainer.classList.add('taskslist-container');
+
+    const divBtnAddTask = document.createElement('div');
+    divBtnAddTask.classList.add('btn-add-task')
+    divBtnAddTask.innerText = "Add Tasks";
+    divBtnAddTask.addEventListener('click', () => {
+        modalContainer.style.display = "flex";
+        modalAddTask.style.display = "grid";
+    });
+
+
+
+    tasksList.appendChild(containerTitle);
+    tasksList.appendChild(divTaskListContainer);
+    tasksList.appendChild(divBtnAddTask);
+
+
+
+    mainDiv.appendChild(tasksList);
+
+    //FINISHED TASKS;
+    const divFinishedTasks = document.createElement('div');
+    divFinishedTasks.classList.add('finished-tasks');
+
+    containerTitle.innerText = "Finished Tasks";
+
+    const divFinishedTasksListContainer = document.createElement('div');
+    divFinishedTasksListContainer.classList.add('finished-taskslist-container');
+
+    divFinishedTasks.appendChild(containerTitle);
+    divFinishedTasks.appendChild(divFinishedTasksListContainer);
+
+
+   
+    divTaskListContainer.innerHTML = "";
+    divFinishedTasksListContainer.innerHTML = ""
     const projectTitle = projectList[key].title;
     const availableTasks = projectList[key].availableTasks;
     const finishedTasks = projectList[key].finishedTasks;
     availableTasks.forEach(aTask => {
         const task = createAvailableTaskCards(aTask.name, aTask.priority);
-        taskListContainer.append(task);
+        divTaskListContainer.appendChild(task);
     });
     finishedTasks.forEach(fTask => {
         const task = createFinishedTaskCards(fTask.name, fTask.priority);
-        finishedTaskListContainer.append(task);
+        divFinishedTasksListContainer.appendChild(task);
     })
 
 }
