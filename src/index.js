@@ -73,8 +73,11 @@ let projectList = [
 
 
 const btnModalAddProject = document.querySelector('.btn-add-project');
+const addProjectModalForm = document.querySelector('.project-form');
 
-const addProjectModalForm = document.querySelector('.project-form')
+const addTaskModalForm = document.querySelector('.task-form');
+const btnModalAddTask = document.querySelector('.modal-btn-add-task')
+
 const modalContainer = document.querySelector('.modal-container');
 const modalAddTask = document.querySelector('.modal-add-task');
 const modalAddProject = document.querySelector('.modal-add-project');
@@ -86,8 +89,6 @@ const btnAddProject = document.querySelector('.modal-btn-add-project');
 
 const mainDiv = document.querySelector('.tasks')
 function loadTasksArea() {
-
-
     const h1Message = document.createElement('h1');
     h1Message.classList.add('task-message');
     
@@ -140,7 +141,7 @@ function loadProject() {
     projectList.forEach((project, index) => {
         const card = createProjectCard(project.title, index);
         projectListContainer.appendChild(card);
-        card.addEventListener('click', projectCardSelect)
+        card.addEventListener('click', projectCardSelect);
     })
 }
 
@@ -169,6 +170,17 @@ function loadTask(key) {
     divBtnAddTask.addEventListener('click', () => {
         modalContainer.style.display = "flex";
         modalAddTask.style.display = "grid";
+
+        
+        addTaskModalForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            addTasktoProject(key);
+        });
+        btnModalAddTask.addEventListener('click', (event) => {
+            event.preventDefault();
+            addTasktoProject(key)
+        })
+        
     });
 
     tasksList.append(containerTitle);
@@ -199,12 +211,12 @@ function loadTask(key) {
     const projectTitle = projectList[key].title;
     const availableTasks = projectList[key].availableTasks;
     const finishedTasks = projectList[key].finishedTasks;
-    availableTasks.forEach(aTask => {
-        const task = createAvailableTaskCards(aTask.name, aTask.priority);
+    availableTasks.forEach((aTask, index) => {
+        const task = createAvailableTaskCards(aTask.name, aTask.priority, index, key);
         divTaskListContainer.appendChild(task);
     });
-    finishedTasks.forEach(fTask => {
-        const task = createFinishedTaskCards(fTask.name, fTask.priority);
+    finishedTasks.forEach((fTask, index) => {
+        const task = createFinishedTaskCards(fTask.name, fTask.priority, index, key);
         divFinishedTasksListContainer.appendChild(task);
     })
 
@@ -212,7 +224,7 @@ function loadTask(key) {
 
 }
 
-function createFinishedTaskCards(name, priority) {
+function createFinishedTaskCards(name, priority, index, key) {
     const taskCard = document.createElement('div');
 
     const btnDelete = document.createElement('button');
@@ -223,6 +235,9 @@ function createFinishedTaskCards(name, priority) {
     btnDeleteText.classList.add('mdi');
     btnDeleteText.classList.add('mdi-close');
     btnDelete.append(btnDeleteText);
+    btnDelete.addEventListener('click', () => {
+        deleteTask("finished", index, key);
+    })
 
     const btnGroup = document.createElement('div');
     btnGroup.classList.add('btn-group');
@@ -238,20 +253,28 @@ function createFinishedTaskCards(name, priority) {
     return taskCard;
 }
 
-function createAvailableTaskCards(name, priority) {
+function createAvailableTaskCards(name, priority, index, key) {
     const taskCard = document.createElement('div');
 
     const btnDone = document.createElement('button');
     btnDone.classList.add('btn-done');
     const btnDelete = document.createElement('button');
     btnDelete.classList.add('btn-delete');
+    btnDone.innerHTML = "Done";
+    btnDone.addEventListener('click', () => {
+        updateTask(index, key);
+    })
 
     //FOR X ICON FOR DELETING TASKS
     const btnDeleteText = document.createElement('span');
     btnDeleteText.classList.add('mdi');
     btnDeleteText.classList.add('mdi-close');
     btnDelete.append(btnDeleteText);
-    btnDone.innerHTML = "Done";
+
+    btnDelete.addEventListener('click', () => {
+        deleteTask("available", index, key)
+    })
+    
 
     const btnGroup = document.createElement('div');
     btnGroup.classList.add('btn-group');
@@ -264,14 +287,13 @@ function createAvailableTaskCards(name, priority) {
     taskName.innerText = name;
     taskCard.appendChild(taskName);
     taskCard.appendChild(btnGroup)
-
     return taskCard;
 }
 
 
 // TODO LIST FUNCTIONS
-class Tasks {
-    constructor(name, priority) {
+class Task {
+    constructor(name, priority, isDone) {
         this.name = name;
         this.priority = priority;
         this.isDone = isDone;
@@ -297,6 +319,18 @@ class Project {
 btnAddProject.addEventListener('click', addProjectObject);
 addProjectModalForm.addEventListener('submit', addProjectObject);
 
+
+function addTasktoProject(key) {
+    const taskName = document.querySelector('#taskName').value;
+    const taskPriority = document.querySelector('#priority').value;
+    const newTask = new Task(taskName, taskPriority, false)
+
+    projectList[key].availableTasks.push(newTask);
+    closeModal()
+    loadTask(key)
+}
+
+
 function addProjectObject(event) {
     event.preventDefault();
     const projectTitle = document.querySelector('#projectTitle').value;
@@ -319,14 +353,25 @@ function addProjectObject(event) {
 //     //adding task to project;
 // }
 
-// function updateTask(project, task) {
-//     //done task
-// }
+function updateTask(taskIndex, projectIndex) {
+
+    const temp = projectList[projectIndex].availableTasks[taskIndex];
+    projectList[projectIndex].availableTasks.splice(taskIndex, 1);
+
+    projectList[projectIndex].finishedTasks.push(temp)
+    console.log(projectList);
+    loadTask(projectIndex);
+}
 
 // function deleteProject(project) {
 //     //delete project
 // }
 
-// function deleteTask(project, task) {
-//     //delete task
-// } 
+function deleteTask(category, taskIndex, projectIndex) {
+    if(category === "available") {
+        projectList[projectIndex].availableTasks.splice(taskIndex, 1);
+    } else if (category === "finished") {
+        projectList[projectIndex].finishedTasks.splice(taskIndex, 1);
+    }
+    loadTask(projectIndex)
+} 
