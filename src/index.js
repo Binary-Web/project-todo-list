@@ -1,81 +1,10 @@
 
-let projectList = [
-    {
-        title: "HELLO",
-        availableTasks: [
-            {
-                name: "TASK 1",
-                priority:  "medium"
-            },
-            {
-                name: "TASK 2",
-                priority: "high"
-            }
-        ],
-        finishedTasks: [
-            {
-                name: "FINISHED TASK 3",
-                priority: "low"
-            },
-            {
-                name: "FINISHED TASK 4",
-                priority: "medium"
-            } 
-        ]
-    },
-    {
-        title: "WORLD",
-        availableTasks: [
-            {
-                name: "WROLD TASK 1",
-                priority:  "low"
-            },
-            {
-                name: "WORLD TASK 2",
-                priority: "medium"
-            }
-        ],
-        finishedTasks: [
-            {
-                name: "WORLD FINISHED TASK 3",
-                priority: "low"
-            },
-            {
-                name: "WORLD FINISHED TASK 4",
-                priority: "high"
-            } 
-        ]
-    },
-    {
-        title: "TESTING",
-        availableTasks: [
-            {
-                name: "TESTING TASK 1",
-                priority:  "high"
-            },
-            {
-                name: "TESTING TASK 2",
-                priority: "low"
-            }
-        ],
-        finishedTasks: [
-            {
-                name: "TESTING FINISHED TASK 3",
-                priority: "medium"
-            },
-            {
-                name: "TESTING FINISHED TASK 4",
-                priority: "medium"
-            } 
-        ]
-    }
-];
+let projectList = [];
 
-
+let indexOfSelectedProject = "";
 const btnModalAddProject = document.querySelector('.btn-add-project');
 const addProjectModalForm = document.querySelector('.project-form');
 
-const addTaskModalForm = document.querySelector('.task-form');
 const btnModalAddTask = document.querySelector('.modal-btn-add-task')
 
 const modalContainer = document.querySelector('.modal-container');
@@ -88,13 +17,7 @@ const btnAddProject = document.querySelector('.modal-btn-add-project');
 
 
 const mainDiv = document.querySelector('.tasks')
-function loadTasksArea() {
-    const h1Message = document.createElement('h1');
-    h1Message.classList.add('task-message');
-    
-    mainDiv.append(h1Message);
-}
-loadTasksArea();
+
 
 
 btnModalAddProject.addEventListener('click', () => {
@@ -148,11 +71,10 @@ function loadProject() {
 loadProject()
 
 
-let firstSelectedProject = true;
-function loadTask(key) {
-    if (firstSelectedProject === true) {
-        mainDiv.innerHTML = ""
-    }
+function loadTask(key, test = false) {
+    mainDiv.innerHTML = "";
+    indexOfSelectedProject = key;
+
     const tasksList = document.createElement('div');
     tasksList.classList.add('tasks-list');
 
@@ -172,16 +94,10 @@ function loadTask(key) {
         modalAddTask.style.display = "grid";
 
         
-        addTaskModalForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            addTasktoProject(key);
-        });
-        btnModalAddTask.addEventListener('click', (event) => {
-            event.preventDefault();
-            addTasktoProject(key)
-        })
-        
+
     });
+
+
 
     tasksList.append(containerTitle);
     tasksList.appendChild(divTaskListContainer);
@@ -223,6 +139,14 @@ function loadTask(key) {
     mainDiv.appendChild(divFinishedTasks)
 
 }
+
+const addTaskModalForm = document.querySelector('.task-form');
+
+        addTaskModalForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            console.log('submit submit submit')
+            addTasktoProject(indexOfSelectedProject);
+});
 
 function createFinishedTaskCards(name, priority, index, key) {
     const taskCard = document.createElement('div');
@@ -293,10 +217,9 @@ function createAvailableTaskCards(name, priority, index, key) {
 
 // TODO LIST FUNCTIONS
 class Task {
-    constructor(name, priority, isDone) {
+    constructor(name, priority) {
         this.name = name;
         this.priority = priority;
-        this.isDone = isDone;
     }
 }
 class Project {
@@ -305,15 +228,6 @@ class Project {
         this.availableTasks = [];
         this.finishedTasks = [];
     }
-    addTaskToProject(newTask) {
-        //addtask
-    }
-    updateTask(task) {
-        //updatetask
-    }
-    deleteTask(task) {
-        //deleete task
-    }
 }
 
 btnAddProject.addEventListener('click', addProjectObject);
@@ -321,13 +235,16 @@ addProjectModalForm.addEventListener('submit', addProjectObject);
 
 
 function addTasktoProject(key) {
-    const taskName = document.querySelector('#taskName').value;
-    const taskPriority = document.querySelector('#priority').value;
-    const newTask = new Task(taskName, taskPriority, false)
+    console.log("ada nk manen")
+    const taskName = document.querySelector('#taskName');
+    const taskPriority = document.querySelector('#priority');
 
-    projectList[key].availableTasks.push(newTask);
-    closeModal()
-    loadTask(key)
+    projectList[key].availableTasks.push(new Task(taskName.value, taskPriority.value));
+    console.log(projectList)
+    closeModal();
+    loadTask(key);
+    taskName.value = "";
+    taskPriority.value = "low"
 }
 
 
