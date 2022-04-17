@@ -224,7 +224,7 @@ button {
     margin: 0.5rem 0;
 }
 
-.modal > .modal-btn-group {
+.modal-btn-group {
     width: 100%;
     gap: 0.5rem;
     display: flex;
