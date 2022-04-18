@@ -10,6 +10,7 @@ const btnModalAddTask = document.querySelector('.modal-btn-add-task')
 const modalContainer = document.querySelector('.modal-container');
 const modalAddTask = document.querySelector('.modal-add-task');
 const modalAddProject = document.querySelector('.modal-add-project');
+const modalEditTask = document.querySelector('.modal-edit-task');
 
 const btnCancel = document.querySelectorAll('.btn-cancel');
 const btnAddProject = document.querySelector('.modal-btn-add-project');
@@ -35,7 +36,9 @@ btnCancel.forEach(btn => btn.addEventListener('click', closeModal));
 function closeModal() {
     modalContainer.style.display = "none";
     modalAddTask.style.display = "none";
-    modalAddProject.style.display = "none";;
+    modalAddProject.style.display = "none";
+    modalEditTask.style.display = "none"
+
 }
 
 // WHEN SELECTINGA PROJECT CARD
@@ -92,9 +95,6 @@ function loadTask(key, test = false) {
     divBtnAddTask.addEventListener('click', () => {
         modalContainer.style.display = "flex";
         modalAddTask.style.display = "grid";
-
-        
-
     });
 
 
@@ -179,7 +179,9 @@ function createFinishedTaskCards(name, priority, index, key) {
 
 function createAvailableTaskCards(name, priority, index, key) {
     const taskCard = document.createElement('div');
-
+    taskCard.addEventListener('click', () => {
+        editTask(key, index);
+    })
     const btnDone = document.createElement('button');
     btnDone.classList.add('btn-done');
     const btnDelete = document.createElement('button');
@@ -215,7 +217,6 @@ function createAvailableTaskCards(name, priority, index, key) {
 }
 
 
-// TODO LIST FUNCTIONS
 class Task {
     constructor(name, priority) {
         this.name = name;
@@ -234,8 +235,9 @@ btnAddProject.addEventListener('click', addProjectObject);
 addProjectModalForm.addEventListener('submit', addProjectObject);
 
 
+
+// TODO LIST FUNCTIONS
 function addTasktoProject(key) {
-    console.log("ada nk manen")
     const taskName = document.querySelector('#taskName');
     const taskPriority = document.querySelector('#priority');
 
@@ -257,21 +259,7 @@ function addProjectObject(event) {
         loadProject();
     };
 }
-
-// function addProject(projectTitle) {
-//     projectList.push(projectTitle)
-// }
-
-// function makeAddProjectForm(newProject) {
-//     //adding proiject
-// }
-
-// function addTaskToProject(project, task) {
-//     //adding task to project;
-// }
-
 function updateTask(taskIndex, projectIndex) {
-
     const temp = projectList[projectIndex].availableTasks[taskIndex];
     projectList[projectIndex].availableTasks.splice(taskIndex, 1);
 
@@ -280,9 +268,6 @@ function updateTask(taskIndex, projectIndex) {
     loadTask(projectIndex);
 }
 
-// function deleteProject(project) {
-//     //delete project
-// }
 
 function deleteTask(category, taskIndex, projectIndex) {
     if(category === "available") {
@@ -292,3 +277,23 @@ function deleteTask(category, taskIndex, projectIndex) {
     }
     loadTask(projectIndex)
 } 
+
+function editTask(projectIndex, taskIndex) {
+    console.log(projectList[projectIndex].availableTasks[taskIndex]);
+    const editTaskName = document.querySelector('#editTaskName');
+    const editPriority = document.querySelector('#editPriority');
+    editTaskName.value = projectList[projectIndex].availableTasks[taskIndex].name;
+    editPriority.value = projectList[projectIndex].availableTasks[taskIndex].priority
+    modalContainer.style.display = "flex";
+    modalEditTask.style.display = "grid";
+
+    const editTaskForm = document.querySelector('.edit-task-form');
+    editTaskForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log("SUBMIT EDIT TASK")
+        projectList[projectIndex].availableTasks[taskIndex].availableTasks = editTaskName.value;
+        projectList[projectIndex].availableTasks[taskIndex].priority = editPriority.value;
+        loadTask(projectIndex);
+        closeModal()
+    })
+}
