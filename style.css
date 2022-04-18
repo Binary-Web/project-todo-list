@@ -217,7 +217,7 @@ button {
     text-align: center;
 }
 
-#projectTitle, #taskName, #priority {
+#projectTitle, #taskName, #priority , #editTaskName, #editPriority {
     width: 300px;
     padding: 0.5rem 1rem;
     outline: none;
