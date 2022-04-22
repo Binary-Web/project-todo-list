@@ -54,9 +54,17 @@ function projectCardSelect(event) {
 }
 function createProjectCard(title, key) {
     const projectCard = document.createElement('div');
+    const deleteButton = document.createElement('div');
+    deleteButton.classList.add('btn-project-delete');
+    deleteButton.innerHTML = `<span class="mdi mdi-close"></span>`;
+    deleteButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        deleteProject(key);
+    })
     projectCard.classList.add('card-project');
     projectCard.setAttribute('key', key);
     projectCard.innerText = title;
+    projectCard.appendChild(deleteButton);
     return projectCard;
 }
 
@@ -124,7 +132,6 @@ function loadTask(key, test = false) {
     //APPENDING THE TASKS
     divTaskListContainer.innerHTML = "";
     divFinishedTasksListContainer.innerHTML = ""
-    const projectTitle = projectList[key].title;
     const availableTasks = projectList[key].availableTasks;
     const finishedTasks = projectList[key].finishedTasks;
     availableTasks.forEach((aTask, index) => {
@@ -249,6 +256,12 @@ function addTasktoProject(key) {
     taskPriority.value = "low"
 }
 
+function deleteProject(key) {
+    // projectList.slice(key, 1);
+    // console.log(projectList)
+    // loadProject();
+    console.log("ASDASD")
+}
 
 function addProjectObject(event) {
     event.preventDefault();

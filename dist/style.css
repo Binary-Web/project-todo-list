@@ -70,7 +70,11 @@ body {
     margin: 1rem 0;
     transition: 0.3s ease;
     cursor: pointer;
-    color: var(--stroke)
+    color: var(--stroke);
+}
+
+.btn-project-delete {
+    float: right;
 }
 
 .card-project {
