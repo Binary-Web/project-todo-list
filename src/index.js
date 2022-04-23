@@ -59,6 +59,7 @@ function createProjectCard(title, key) {
     deleteButton.innerHTML = `<span class="mdi mdi-close"></span>`;
     deleteButton.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         deleteProject(key);
     })
     projectCard.classList.add('card-project');
@@ -186,7 +187,8 @@ function createFinishedTaskCards(name, priority, index, key) {
 
 function createAvailableTaskCards(name, priority, index, key) {
     const taskCard = document.createElement('div');
-    taskCard.addEventListener('click', () => {
+    taskCard.addEventListener('click', (e) => {
+        e.stopPropagation();
         editTask(key, index);
     })
     const btnDone = document.createElement('button');
@@ -194,7 +196,8 @@ function createAvailableTaskCards(name, priority, index, key) {
     const btnDelete = document.createElement('button');
     btnDelete.classList.add('btn-delete');
     btnDone.innerHTML = "Done";
-    btnDone.addEventListener('click', () => {
+    btnDone.addEventListener('click', (e) => {
+        e.stopPropagation();
         updateTask(index, key);
     })
 
@@ -204,7 +207,8 @@ function createAvailableTaskCards(name, priority, index, key) {
     btnDeleteText.classList.add('mdi-close');
     btnDelete.append(btnDeleteText);
 
-    btnDelete.addEventListener('click', () => {
+    btnDelete.addEventListener('click', (e) => {
+        e.stopPropagation();
         deleteTask("available", index, key)
     })
     
@@ -257,9 +261,9 @@ function addTasktoProject(key) {
 }
 
 function deleteProject(key) {
-    // projectList.slice(key, 1);
-    // console.log(projectList)
-    // loadProject();
+    projectList.splice(key, 1);
+    console.log(projectList)
+    loadProject();
     console.log("ASDASD")
 }
 
